@@ -1,0 +1,15 @@
+1;age;income;student;credit rating;Class: buys computer
+2;youth;high;no;fair;no
+1;youth;high;no;excellent;no
+1;middle aged;high;no;fair;yes
+2;senior;medium;no;fair;yes
+2;senior;low;yes;fair;yes
+1;senior;low;yes;excellent;no
+1;middle aged;low;yes;excellent;yes
+1;youth;medium;no;fair;no
+2;youth;low;yes;fair;yes
+2;senior;medium;yes;fair;yes
+1;youth;medium;yes;excellent;yes
+1;middle aged;medium;no;excellent;yes
+2;middle aged;high;yes;fair;yes
+1;senior;medium;no;excellent;no
