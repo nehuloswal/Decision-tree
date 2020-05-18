@@ -2,7 +2,18 @@
 # coding: utf-8
 
 from collections import OrderedDict
-#import pandas as pd
+import pandas as pd
+import math
+from decimal import Decimal
+import os
+import time
+import psutil
+import random
+import itertools
+from collections import OrderedDict
+import copy
+
+
 def readData():
     #z = pd.read_csv("data.csv",delimiter = ";")
     cnt = 0
@@ -29,9 +40,6 @@ def readData():
 
 
 # In[713]:
-
-
-import math
 def Entropy(dict_data):
     labels = {}
     for val in dict_data.values():
@@ -63,7 +71,6 @@ def splitting_index_values(dict_data,splitting_index):
 
 
 #THis function returns the partitoned data for the attribute values we split upon
-from collections import OrderedDict
 def get_partition(dict_data,attr_val,splitting_index):
     data = OrderedDict()
     splitting_index = int(splitting_index)
@@ -81,7 +88,6 @@ def get_partition(dict_data,attr_val,splitting_index):
 
 
 #THis function returns the partitoned data for the attribute values we split upon. Use it for only continuous data
-from collections import OrderedDict
 def get_partition_continuous(dict_data,splitting_index,split_mid_pt):
     splitting_index = int(splitting_index)
     val = 0
@@ -193,7 +199,6 @@ def Gini_Index_Continuous(dict_data,labels,index):
 
 
 #THis function returns the attribute value & index of the attribute with minimum gini val
-import itertools
 def get_subset(dict_data,labels):
     #print("D=",dict_data)
     min_gini_index = -10.0
@@ -222,15 +227,7 @@ def get_subset(dict_data,labels):
 
 
 # In[720]:
-
-
-#print(sorted(dict_data.values(), key=lambda e: e[0], reverse = True))
-#s = list(set(row[0] for row in (dict_data[val] for val in dict_data.keys())))
-#d1 = {k:v for (k,v) in dict_data.items() if dict_data[k][0] == '2'}
-
 #This function calculates info gain for continuous data and returns the split point with best info gain
-import math
-from collections import OrderedDict
 def continuous_info_gain(dict_data,index,entropy,labels):
     sum_less = 0.0
     sum_more = 0.0
@@ -262,17 +259,7 @@ def continuous_info_gain(dict_data,index,entropy,labels):
         sum_more = 0.0
         tot_sum_less = 0.0
         tot_sum_more = 0.0
-        split_info = 0.0
-        '''for label_val in labels:
-            info_less = float([d1_less[row][-1] for row in d1_less.keys()].count(label_val))/len_less
-            info_more = float([d1_more[row][-1] for row in d1_more.keys()].count(label_val))/len_more
-            #tot_sum_less += float([d1_less[row][-1] for row in d1_less.keys()].count(label_val))
-            #tot_sum_more += float([d1_more[row][-1] for row in d1_more.keys()].count(label_val))
-            if(info_less != 0):
-                sum_less += (-1 * info_less * (math.log(info_less)/math.log(2)))
-            if(info_more != 0):
-                sum_more += (-1 * info_more * (math.log(info_more)/math.log(2)))'''
-                
+        split_info = 0.0       
         if(len(d1_less) != 0):
             #print(len(d1_less),len(dict_data))
             tot_sum_less = (-1*(float(len(d1_less))/len(dict_data))) * math.log(float(len(d1_less))/len(dict_data))/math.log(2)
@@ -308,8 +295,6 @@ def continuous_info_gain(dict_data,index,entropy,labels):
 #gain_ratio_splitting_index - Index(attribute index) with max gain ratio
 #iscontinuous - Tells whether the split pt is categorical or continuous
 #split_mid_pt - Mid pt of the split. Used in case of continuous data
-from collections import OrderedDict
-import math
 def Info_gain(dict_data,entropy,labels):
     info_attr = 0.0
     splitting_index = 0
@@ -394,9 +379,6 @@ class Tree_Node:
 
 
 # In[723]:
-
-
-import copy
 def gen_Tree(dict_org, labels, attrList, parent_decision, function):#does labels get updated for partitions?
     dict_copy = dict_org.copy()
     attrList_copy = attrList
@@ -473,8 +455,6 @@ def printTree(Node):
         printTree(Node.children[child])
         
 
-
-import random
 def getLearningSetAndTestingSet(org_dict, ratio):
     random.shuffle(org_dict)
     LearningSetLength = int(len(org_dict)*ratio)
@@ -510,12 +490,6 @@ def TestWithTree(TestEntry, decisionTree, majority):
 
 
 # In[728]:
-
-
-from decimal import Decimal
-import os
-import time
-import psutil
 start_time = time.time()
 dict_org, labels = readData()
 entropy = Entropy(dict_org)
